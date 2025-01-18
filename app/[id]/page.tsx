@@ -8,8 +8,8 @@ export default async function PlanDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const slug = (await params).id;
-  const plan = await Plan.findById(slug);
+  const planId = (await params).id;
+  const plan = await Plan.findById(planId);
 
   if (!plan) {
     return <h1>Not Found</h1>;
@@ -19,7 +19,7 @@ export default async function PlanDetailPage({
     <main>
       <section className={styles.header}>
         <h1>{plan.name}</h1>
-        <Link href="/goals/new" className={styles.primaryButton}>
+        <Link href={`/${planId}/goals/new`} className={styles.primaryButton}>
           New
         </Link>
       </section>
