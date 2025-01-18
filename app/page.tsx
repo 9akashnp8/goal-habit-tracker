@@ -1,43 +1,28 @@
-"use client";
-
-import Image from "next/image";
+import Plan from "@/lib/model";
 import styles from "./page.module.css";
 
-import { use, useState } from "react";
+import Link from "next/link";
 
-export default function Home() {
-  const [goals, setGoals] = useState<string[]>([]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const goal = e.target.goal.value;
-    setGoals([...goals, goal]);
-    e.target.reset();
-  }
-
+export default async function Home() {
+  const plans = await Plan.find();
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h1>Add Goal</h1>
-        <form action="" onSubmit={handleSubmit}>
-          <label htmlFor="goal">Type your goal</label>
-          <input type="text" id="goal" />
-          <button>Submit</button>
-        </form>
-        <div>
+        <header className={styles.header}>
+          <h1>Plans</h1>
+          <Link href={"/new"} className={styles.link}>
+            New
+          </Link>
+        </header>
+        <section>
           <ul>
-            {goals.map((goal) => {
-              return (
-                <li key={goal}>
-                  <div>
-                    {goal}
-                    <button>Add sub goal</button>
-                  </div>
-                </li>
-              );
-            })}
+            {plans.map((p) => (
+              <li key={p.id}>
+                <Link href={`/${p.id}`}>{p.name}</Link>
+              </li>
+            ))}
           </ul>
-        </div>
+        </section>
       </main>
     </div>
   );
