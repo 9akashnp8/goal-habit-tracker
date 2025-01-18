@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: grey;
+}
