@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.primaryButton {
+  padding: 1rem;
+  background-color: grey;
+  border-radius: 1rem;
+}
