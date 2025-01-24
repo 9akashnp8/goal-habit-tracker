@@ -19,7 +19,10 @@ export default async function PlanDetailPage({
     <main>
       <section className={styles.header}>
         <h1>{plan.name}</h1>
-        <Link href={`/${planId}/goals/new`} className={styles.primaryButton}>
+        <Link
+          href={`/${planId}/goals/new/step-1`}
+          className={styles.primaryButton}
+        >
           New
         </Link>
       </section>

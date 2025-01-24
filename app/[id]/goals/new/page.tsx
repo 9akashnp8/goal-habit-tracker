@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext, createContext } from "react";
 
 import styles from "./page.module.css";
 import NewGoalForm from "./components/new-goal-form";
@@ -11,7 +11,10 @@ type Goal = {
   frequency: string;
 };
 
+export const NewGoalContext = createContext<{ test: string }>({ test: "" });
+
 export default function AddNewGoals() {
+  const [test, setTest] = useState({ test: "hello" });
   const [goals, setGoals] = useState<Goal[]>([]);
 
   return (
