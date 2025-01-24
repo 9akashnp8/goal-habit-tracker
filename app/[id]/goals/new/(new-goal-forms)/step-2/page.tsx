@@ -3,8 +3,10 @@
 import { FormEvent, useContext } from "react";
 
 import { useCount } from "../../state";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+
 export default function NewGoalStep2() {
+  const router = useRouter();
   const { state, dispatch } = useCount();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -13,7 +15,7 @@ export default function NewGoalStep2() {
     const goal = formData.get("goal");
     console.log({ goal });
     dispatch({ type: "increment" });
-    redirect("step-3");
+    router.push("step-3");
   }
   return (
     <>

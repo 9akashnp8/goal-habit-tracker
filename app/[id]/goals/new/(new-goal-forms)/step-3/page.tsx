@@ -1,9 +1,12 @@
 "use client";
 
 import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 import { useCount } from "../../state";
+
 export default function NewGoalStep2() {
+  const router = useRouter();
   const { state, dispatch } = useCount();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -12,6 +15,7 @@ export default function NewGoalStep2() {
     const goal = formData.get("goal");
     console.log({ goal });
     dispatch({ type: "increment" });
+    router.push("success");
   }
   return (
     <>
