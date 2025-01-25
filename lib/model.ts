@@ -31,7 +31,44 @@ const planSchema = new mongoose.Schema<IPlanDocument>(
   }
 );
 
-const Plan: Model<IPlanDocument> =
+export const Plan: Model<IPlanDocument> =
   mongoose.models.Plan || mongoose.model("Plan", planSchema);
 
-export default Plan;
+export interface IGoal {
+  planId: string;
+  goal: {
+    objectId: string;
+    goal: string;
+    level: number;
+    subgoals?: IGoal[];
+  };
+}
+
+export interface IGoalDocument extends IGoal, Document {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const goalSchema = new mongoose.Schema<IGoalDocument>(
+  {
+    planId: {
+      type: String,
+      required: true,
+    },
+    goal: {
+      type: {
+        objectId: String,
+        goal: String,
+        level: Number,
+        subgoals: [],
+      },
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Goal: Model<IGoalDocument> =
+  mongoose.models.Goal || mongoose.model("Goal", goalSchema);
