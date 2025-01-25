@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Plan from "@/lib/model";
+import { Plan } from "@/lib/model";
 
 import styles from "./page.module.css";
 

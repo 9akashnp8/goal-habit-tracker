@@ -1,4 +1,4 @@
-import Plan from "@/lib/model";
+import { Plan } from "@/lib/model";
 import styles from "./page.module.css";
 
 import Link from "next/link";
