@@ -2,9 +2,17 @@
 
 import { createContext, useContext, useReducer } from "react";
 
-type Action = { type: "increment" } | { type: "decrement" };
+type Action = {
+  type: string;
+  payload: { objectId: string; goal: string; parentId?: string };
+};
 type Dispatch = (action: Action) => void;
-type State = { count: number };
+type State = {
+  objectId: string;
+  goal: string;
+  level: number;
+  subgoals?: State[];
+};
 type CountProviderProps = { children: React.ReactNode };
 
 const CountContext = createContext<
@@ -13,11 +21,39 @@ const CountContext = createContext<
 
 function countReducer(state: State, action: Action) {
   switch (action.type) {
-    case "increment": {
-      return { count: state.count + 1 };
+    case "add-main-goal": {
+      return {
+        ...state,
+        level: 1,
+        ...action.payload,
+      };
     }
-    case "decrement": {
-      return { count: state.count - 1 };
+    case "add-monthly-goal": {
+      return {
+        ...state,
+        subgoals: [
+          ...(state.subgoals || []),
+          {
+            ...action.payload,
+            level: 2,
+          },
+        ],
+      };
+    }
+    case "add-weekly-goal": {
+      let copy = JSON.parse(JSON.stringify(state));
+      copy.subgoals?.forEach((subgoal: typeof state) => {
+        if (subgoal.objectId === action.payload.parentId) {
+          subgoal.subgoals = [
+            ...(subgoal.subgoals || []),
+            {
+              ...action.payload,
+              level: 3,
+            },
+          ];
+        }
+      });
+      return copy;
     }
     default: {
       throw new Error(`Unhandled action type: ${action}`);
@@ -26,7 +62,11 @@ function countReducer(state: State, action: Action) {
 }
 
 function CountProvider({ children }: CountProviderProps) {
-  const [state, dispatch] = useReducer(countReducer, { count: 0 });
+  const [state, dispatch] = useReducer(countReducer, {
+    objectId: "",
+    goal: "",
+    level: 0,
+  });
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context
   const value = { state, dispatch };
