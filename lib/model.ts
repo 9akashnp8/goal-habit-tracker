@@ -40,7 +40,7 @@ export interface IGoal {
     objectId: string;
     goal: string;
     level: number;
-    subgoals?: IGoal[];
+    subgoals?: IGoal["goal"][];
   };
 }
 
