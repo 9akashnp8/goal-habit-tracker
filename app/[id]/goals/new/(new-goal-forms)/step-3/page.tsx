@@ -23,7 +23,7 @@ export default function Page() {
     formData.append("taskId", id);
     formData.append("goal", JSON.stringify(goal));
     const result = await addNewGoal(formData);
-    console.log(result);
+    router.push(`/${id}/goals`);
   }
 
   return (
