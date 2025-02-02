@@ -4,12 +4,20 @@ import { createContext, useContext, useReducer } from "react";
 
 type Action = {
   type: string;
-  payload: { objectId: string; goal: string; parentId?: string };
+  payload: {
+    objectId: string;
+    goal: string;
+    startDate: string;
+    endDate: string;
+    parentId?: string;
+  };
 };
 type Dispatch = (action: Action) => void;
 type State = {
   objectId: string;
   goal: string;
+  startDate: string;
+  endDate: string;
   level: number;
   subgoals?: State[];
 };
@@ -65,6 +73,8 @@ function CountProvider({ children }: CountProviderProps) {
   const [state, dispatch] = useReducer(countReducer, {
     objectId: "",
     goal: "",
+    startDate: "",
+    endDate: "",
     level: 0,
   });
   // NOTE: you *might* need to memoize this value

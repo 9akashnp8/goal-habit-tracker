@@ -21,7 +21,9 @@ export default async function PlanDetailPage({
       <section className={styles.header}>
         <h1>{plan.name}</h1>
         <Link
-          href={`/${planId}/goals/new/step-1`}
+          href={`/${planId}/goals/new/step-1?min=${
+            plan.startDate.toISOString().split("T")[0]
+          }&max=${plan.endDate.toISOString().split("T")[0]}`}
           className={styles.primaryButton}
         >
           New
