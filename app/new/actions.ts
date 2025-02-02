@@ -1,6 +1,6 @@
 "use server";
 
-import Plan from "@/lib/model";
+import { Plan } from "@/lib/model";
 
 export type FormState =
   | {
