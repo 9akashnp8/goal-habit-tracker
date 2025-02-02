@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Plan } from "@/lib/model";
 
 import styles from "./page.module.css";
+import GoalList from "./components/goal-list";
 
 export default async function PlanDetailPage({
   params,
@@ -25,6 +26,9 @@ export default async function PlanDetailPage({
         >
           New
         </Link>
+      </section>
+      <section>
+        <GoalList platId={planId} />
       </section>
     </main>
   );
