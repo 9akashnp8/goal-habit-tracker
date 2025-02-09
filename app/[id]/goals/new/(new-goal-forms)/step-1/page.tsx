@@ -15,7 +15,9 @@ export default function NewGoalStep1() {
     const formData = new FormData(e.currentTarget);
     const goal = formData.get("goal")?.toString()!;
     const startDate = formData.get("startDate")?.toString()!;
+    console.log(startDate);
     const endDate = formData.get("endDate")?.toString()!;
+    console.log(endDate);
     dispatch({
       type: "add-main-goal",
       payload: {
@@ -25,7 +27,11 @@ export default function NewGoalStep1() {
         endDate: endDate,
       },
     });
-    router.push("step-2");
+    router.push(
+      `step-2?min=${new Date(startDate).toISOString().split("T")[0]}&max=${
+        new Date(endDate).toISOString().split("T")[0]
+      }`
+    );
   }
   return (
     <>
@@ -37,18 +43,24 @@ export default function NewGoalStep1() {
           <input type="text" name="goal" id="goal" />
         </div>
         <div>
-          <label htmlFor="stardDate">Start Date</label>
+          <label htmlFor="startDate">Start Date</label>
           <input
             type="date"
-            name="stardDate"
-            id="stardDate"
+            name="startDate"
+            id="startDate"
             max={searchParams.get("max")!}
             min={searchParams.get("min")!}
           />
         </div>
         <div>
           <label htmlFor="endDate">End Date</label>
-          <input type="date" name="endDate" id="endDate" />
+          <input
+            type="date"
+            name="endDate"
+            id="endDate"
+            max={searchParams.get("max")!}
+            min={searchParams.get("min")!}
+          />
         </div>
         <button type="submit">Next</button>
       </form>

@@ -13,7 +13,7 @@ export default function Page() {
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const { state: goal, dispatch } = useCount();
-  const [weeklyGoal, setWeeklyGoal] = useState<string>("");
+  const [weeklyGoal, setWeeklyGoal] = useState<{}>({});
 
   async function saveGoal() {
     if (!id) {
@@ -26,6 +26,24 @@ export default function Page() {
     router.push(`/${id}`);
   }
 
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const goal = formData.get("goal")!.toString();
+    const startDate = formData.get("stardDate")!.toString();
+    const endDate = formData.get("endDate")!.toString();
+    dispatch({
+      type: "add-weekly-goal",
+      payload: {
+        parentId: searchParams.get("parentId") || undefined,
+        objectId: uuid(),
+        goal,
+        startDate,
+        endDate,
+      },
+    });
+  }
+
   return (
     <>
       <h1>Step 3: What are your weekly goals</h1>
@@ -33,28 +51,31 @@ export default function Page() {
         What are your achievements going to be by the end of each week to ensure
         that you reach your main goal.
       </p>
-      <form
-        action=""
-        onSubmit={(e) => {
-          e.preventDefault();
-          dispatch({
-            type: "add-weekly-goal",
-            payload: {
-              parentId: searchParams.get("parentId") || undefined,
-              objectId: uuid(),
-              goal: weeklyGoal,
-            },
-          });
-        }}
-      >
-        <label htmlFor="goal">Goal</label>
-        <input
-          type="text"
-          name="goal"
-          id="goal"
-          value={weeklyGoal}
-          onChange={(e) => setWeeklyGoal(e.target.value)}
-        />
+      <form action="" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="goal">Goal</label>
+          <input type="text" name="goal" id="goal" />
+        </div>
+        <div>
+          <label htmlFor="stardDate">Start Date</label>
+          <input
+            type="date"
+            name="stardDate"
+            id="stardDate"
+            max={searchParams.get("max")!}
+            min={searchParams.get("min")!}
+          />
+        </div>
+        <div>
+          <label htmlFor="endDate">End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            id="endDate"
+            max={searchParams.get("max")!}
+            min={searchParams.get("min")!}
+          />
+        </div>
         <button type="submit">Add Another</button>
         <button type="button" onClick={() => router.back()}>
           Add Another Monthly Goal?
