@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Plan } from "@/lib/model";
 
 import styles from "./page.module.css";
-import GoalList from "./components/goal-list";
+import GoalList from "./components/goal-list/goal-list";
 
 export default async function PlanDetailPage({
   params,
